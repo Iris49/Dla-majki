@@ -8,56 +8,82 @@
 <style>
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     background: linear-gradient(135deg, #ff758c, #ff7eb3);
     color: white;
     text-align: center;
     overflow-x: hidden;
 }
 
+/* ✨ Nagłówek */
 header {
-    padding: 40px;
-    font-size: 36px;
+    padding: 50px 20px 20px;
+    font-size: 38px;
     font-weight: bold;
+    animation: fadeIn 2s;
 }
 
 .love-text {
     font-size: 20px;
     margin: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
 }
 
+/* ⏳ licznik */
 #timer {
     font-size: 24px;
     margin: 20px;
     font-weight: bold;
 }
 
+/* 📸 GALERIA */
 .gallery {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
     padding: 20px;
 }
 
 .gallery img {
-    width: 250px;
-    height: 250px;
+    width: 100%;
+    height: 220px;
     object-fit: cover;
-    margin: 10px;
     border-radius: 20px;
     box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    transition: 0.3s;
+    cursor: pointer;
 }
 
-footer {
-    margin: 40px;
+.gallery img:hover {
+    transform: scale(1.05);
 }
 
-/* ❤️ SERDUSZKA */
+/* 📸 powiększenie */
+.lightbox {
+    position: fixed;
+    display: none;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox img {
+    max-width: 90%;
+    max-height: 80%;
+    border-radius: 20px;
+}
+
+/* ❤️ serca */
 .heart {
     position: fixed;
     bottom: -10px;
     color: rgba(255,255,255,0.8);
-    font-size: 20px;
     animation: floatUp linear infinite;
 }
 
@@ -66,6 +92,17 @@ footer {
         transform: translateY(-100vh);
         opacity: 0;
     }
+}
+
+/* ✨ animacja wejścia */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+footer {
+    margin: 40px;
+    font-size: 18px;
 }
 </style>
 </head>
@@ -77,29 +114,43 @@ footer {
 <div class="love-text">
     Jesteś najważniejszą osobą w moim życiu 💕  
     Każdy dzień z Tobą to coś wyjątkowego  
+    Dziękuję, że jesteś ❤️
 </div>
 
 <div id="timer"></div>
 
+<!-- 📸 DUŻA GALERIA -->
 <div class="gallery">
-    <img src="zdjecie1.jpg">
-    <img src="zdjecie2.jpg">
-    <img src="zdjecie3.jpg">
+    <img src="img1.jpg" onclick="openImg(this)">
+    <img src="img2.jpg" onclick="openImg(this)">
+    <img src="img3.jpg" onclick="openImg(this)">
+    <img src="img4.jpg" onclick="openImg(this)">
+    <img src="img5.jpg" onclick="openImg(this)">
+    <img src="img6.jpg" onclick="openImg(this)">
+    <img src="img7.jpg" onclick="openImg(this)">
+    <img src="img8.jpg" onclick="openImg(this)">
+    <img src="img9.jpg" onclick="openImg(this)">
+    <img src="img10.jpg" onclick="openImg(this)">
+</div>
+
+<!-- 🔍 powiększenie -->
+<div class="lightbox" id="lightbox" onclick="closeImg()">
+    <img id="lightbox-img">
 </div>
 
 <footer>Na zawsze Twój ❤️</footer>
 
 <script>
-// ⏳ LICZNIK CZASU
+// ⏳ LICZNIK
 const startDate = new Date("2025-06-07T00:00:00");
 
 function updateTimer() {
     const now = new Date();
     const diff = now - startDate;
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff / (1000*60*60)) % 24);
+    const minutes = Math.floor((diff / (1000*60)) % 60);
     const seconds = Math.floor((diff / 1000) % 60);
 
     document.getElementById("timer").innerHTML =
@@ -109,24 +160,32 @@ function updateTimer() {
 setInterval(updateTimer, 1000);
 updateTimer();
 
-// 💖 ANIMOWANE SERCA
+// 💖 serduszka
 function createHeart() {
     const heart = document.createElement("div");
     heart.classList.add("heart");
     heart.innerHTML = "❤️";
 
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (10 + Math.random() * 30) + "px";
+    heart.style.fontSize = (10 + Math.random() * 25) + "px";
     heart.style.animationDuration = (3 + Math.random() * 5) + "s";
 
     document.body.appendChild(heart);
 
-    setTimeout(() => {
-        heart.remove();
-    }, 8000);
+    setTimeout(() => heart.remove(), 8000);
 }
 
 setInterval(createHeart, 300);
+
+// 🔍 powiększanie zdjęć
+function openImg(img) {
+    document.getElementById("lightbox").style.display = "flex";
+    document.getElementById("lightbox-img").src = img.src;
+}
+
+function closeImg() {
+    document.getElementById("lightbox").style.display = "none";
+}
 </script>
 
 </body>
