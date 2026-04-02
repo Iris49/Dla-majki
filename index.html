@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dla Ciebie ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+header {
+    padding: 40px;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.love-text {
+    font-size: 20px;
+    margin: 20px;
+}
+
+#timer {
+    font-size: 24px;
+    margin: 20px;
+    font-weight: bold;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.gallery img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    margin: 10px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+footer {
+    margin: 40px;
+}
+
+/* ❤️ SERDUSZKA */
+.heart {
+    position: fixed;
+    bottom: -10px;
+    color: rgba(255,255,255,0.8);
+    font-size: 20px;
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>❤️ Kocham Cię ❤️</header>
+
+<div class="love-text">
+    Jesteś najważniejszą osobą w moim życiu 💕  
+    Każdy dzień z Tobą to coś wyjątkowego  
+</div>
+
+<div id="timer"></div>
+
+<div class="gallery">
+    <img src="zdjecie1.jpg">
+    <img src="zdjecie2.jpg">
+    <img src="zdjecie3.jpg">
+</div>
+
+<footer>Na zawsze Twój ❤️</footer>
+
+<script>
+// ⏳ LICZNIK CZASU
+const startDate = new Date("2025-06-07T00:00:00");
+
+function updateTimer() {
+    const now = new Date();
+    const diff = now - startDate;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("timer").innerHTML =
+        `Jesteśmy razem: ${days} dni ${hours}h ${minutes}m ${seconds}s ❤️`;
+}
+
+setInterval(updateTimer, 1000);
+updateTimer();
+
+// 💖 ANIMOWANE SERCA
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (10 + Math.random() * 30) + "px";
+    heart.style.animationDuration = (3 + Math.random() * 5) + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 8000);
+}
+
+setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
